@@ -1,0 +1,6 @@
+@Marguds_EXE201_HostAddress = http://localhost:5031
+
+GET {{Marguds_EXE201_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
