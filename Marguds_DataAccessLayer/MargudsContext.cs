@@ -1,5 +1,6 @@
 ﻿using Marguds_BussinessObject.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,11 +95,23 @@ namespace Marguds_DataAccessLayer
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
 
-        private const string ConnectString = "server=DESKTOP-88329MO\\KHANHVU21;database=Marguds_Db1;uid=sa;pwd=12345;Integrated Security=true;Trusted_Connection=false;TrustServerCertificate=True";
-             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-             {
-                 optionsBuilder.UseSqlServer(ConnectString);
-             
-             }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(GetConnectionString());
+            }
+        //    optionsBuilder.UseLazyLoadingProxies();
+        }
+        private string GetConnectionString()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                 .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", true, true)
+                        .Build();
+            var strConn = config["ConnectionStrings:DefaultConnection"];
+
+            return strConn;
+        }
     }
 }
