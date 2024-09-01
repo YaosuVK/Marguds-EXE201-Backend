@@ -10,7 +10,7 @@ namespace Marguds_BussinessObject.Model
     public class Brand
     {
         [Key]
-        public int BrandID { get; set; }
+        public Guid BrandID { get; set; }
         [Required]
         public string Name { get; set; }
         //

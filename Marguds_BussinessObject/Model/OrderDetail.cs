@@ -11,7 +11,7 @@ namespace Marguds_BussinessObject.Model
     public class OrderDetail
     {
         [Key]
-        public int OrderDetailID { get; set; }
+        public Guid OrderDetailID { get; set; }
         public int Quantity { get; set; }
         public double unitPrice { get; set; }
         public double promotionPrice { get; set; }
@@ -21,7 +21,7 @@ namespace Marguds_BussinessObject.Model
         //[ForeignKey("OrderID ")]
         public Order? Order { get; set; }
 
-        public int ProductID { get; set; }
+        public Guid ProductID { get; set; }
         [ForeignKey("ProductID ")]
         public Product Products { get; set; }
     }

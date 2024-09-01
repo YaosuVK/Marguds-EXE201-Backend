@@ -11,13 +11,13 @@ namespace Marguds_BussinessObject.Model
     public class Review
     {
         [Key]
-        public int ReviewID { get; set; }
+        public Guid ReviewID { get; set; }
         //
-        public int ProductID { get; set; }
+        public Guid ProductID { get; set; }
         [ForeignKey("ProductID")]
         public Product Product { get; set; }
         //
-        public string AccountID { get; set; }
+        public Guid AccountID { get; set; }
         [ForeignKey("AccountID")]
         public Account Account { get; set; }
 
