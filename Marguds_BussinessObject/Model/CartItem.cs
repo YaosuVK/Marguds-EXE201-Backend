@@ -11,14 +11,14 @@ namespace Marguds_BussinessObject.Model
     public class CartItem
     {
         [Key]
-        public int CartItemID { get; set; }
+        public Guid CartItemID { get; set; }
         public int Quantity { get; set; }
         //
-        public int ProductID { get; set; }
+        public Guid ProductID { get; set; }
         [ForeignKey("ProductID")]
         public Product Product { get; set; }
         //
-        public int CartID { get; set; }
+        public Guid CartID { get; set; }
         [ForeignKey("CartID")]
         public Cart Cart { get; set; }
     }

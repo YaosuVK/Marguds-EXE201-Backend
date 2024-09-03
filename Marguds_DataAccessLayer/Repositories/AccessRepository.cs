@@ -2,6 +2,7 @@
 using Marguds_BussinessObject.Model;
 using Marguds_BussinessObject.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using BC = global::BCrypt.Net.BCrypt;
 
 namespace Marguds_DataAccessLayer.Repositories
 {
@@ -23,8 +24,7 @@ namespace Marguds_DataAccessLayer.Repositories
 
             if (user != null)
             {
-                //if (!BC.EnhancedVerify(model.Password, user.Password)) { return null; }
-                if(user.Password != model.Password) { return null; }
+                if (!BC.EnhancedVerify(model.Password, user.Password)) { return null; }
                 return _mapper.Map<UserInfo>(user);
             }
 

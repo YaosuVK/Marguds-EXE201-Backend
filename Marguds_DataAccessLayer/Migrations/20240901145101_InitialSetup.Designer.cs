@@ -12,29 +12,30 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marguds_DataAccessLayer.Migrations
 {
     [DbContext(typeof(MargudsContext))]
-    [Migration("20240819092007_Initial")]
-    partial class Initial
+    [Migration("20240901145101_InitialSetup")]
+    partial class InitialSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Account", b =>
                 {
-                    b.Property<string>("AccountID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AccountID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -60,9 +61,8 @@ namespace Marguds_DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("AccountID");
 
@@ -71,11 +71,9 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Brand", b =>
                 {
-                    b.Property<int>("BrandID")
+                    b.Property<Guid>("BrandID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -88,15 +86,12 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Cart", b =>
                 {
-                    b.Property<int>("CartID")
+                    b.Property<Guid>("CartID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartID"));
-
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AccountID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CartID");
 
@@ -107,17 +102,15 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.CartItem", b =>
                 {
-                    b.Property<int>("CartItemID")
+                    b.Property<Guid>("CartItemID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemID"));
+                    b.Property<Guid>("CartID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CartID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -133,11 +126,9 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Category", b =>
                 {
-                    b.Property<int>("CategoryID")
+                    b.Property<Guid>("CategoryID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -150,17 +141,15 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Fees", b =>
                 {
-                    b.Property<int>("FeesID")
+                    b.Property<Guid>("FeesID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeesID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("FixedFee")
                         .HasColumnType("float");
 
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double?>("PaymentFee")
                         .HasColumnType("float");
@@ -178,11 +167,9 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.FeesConfiguration", b =>
                 {
-                    b.Property<int>("FeeConfigID")
+                    b.Property<Guid>("FeeConfigID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeeConfigID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("FixedFeePercentage")
                         .HasColumnType("decimal(18,2)");
@@ -197,18 +184,16 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.ImageProduct", b =>
                 {
-                    b.Property<int>("ImageProductsID")
+                    b.Property<Guid>("ImageProductsID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageProductsID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ImageProductsID");
 
@@ -219,18 +204,15 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Order", b =>
                 {
-                    b.Property<int>("OrderID")
+                    b.Property<Guid>("OrderID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"));
+                    b.Property<Guid>("AccountID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("FeesID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("FeesID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -238,8 +220,8 @@ namespace Marguds_DataAccessLayer.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReportID")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ReportID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -247,8 +229,8 @@ namespace Marguds_DataAccessLayer.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
-                    b.Property<string>("transactionID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("transactionID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OrderID");
 
@@ -267,17 +249,15 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderDetailID")
+                    b.Property<Guid>("OrderDetailID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailID"));
+                    b.Property<Guid?>("OrderID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -302,21 +282,18 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Product", b =>
                 {
-                    b.Property<int>("ProductID")
+                    b.Property<Guid>("ProductID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"));
+                    b.Property<Guid>("AccountID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("BrandID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BrandID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -349,21 +326,18 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Rating", b =>
                 {
-                    b.Property<int>("RatingID")
+                    b.Property<Guid>("RatingID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingID"));
-
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AccountID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
@@ -382,15 +356,12 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Report", b =>
                 {
-                    b.Property<int>("ReportID")
+                    b.Property<Guid>("ReportID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportID"));
-
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AccountID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -398,11 +369,11 @@ namespace Marguds_DataAccessLayer.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ReportText")
                         .IsRequired()
@@ -426,15 +397,12 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Review", b =>
                 {
-                    b.Property<int>("ReviewID")
+                    b.Property<Guid>("ReviewID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewID"));
-
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AccountID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -443,8 +411,8 @@ namespace Marguds_DataAccessLayer.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -460,8 +428,9 @@ namespace Marguds_DataAccessLayer.Migrations
 
             modelBuilder.Entity("Marguds_BussinessObject.Model.Transaction", b =>
                 {
-                    b.Property<string>("ResponseId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("ResponseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");

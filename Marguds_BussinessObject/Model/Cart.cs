@@ -11,9 +11,9 @@ namespace Marguds_BussinessObject.Model
     public class Cart
     {
         [Key]
-        public int CartID { get; set; }
+        public Guid CartID { get; set; }
 
-        public string AccountID { get; set; }
+        public Guid AccountID { get; set; }
         [ForeignKey("AccountID")]
         public Account Accounts { get; set; }
         

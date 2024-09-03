@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Marguds_DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -23,8 +23,8 @@ namespace Marguds_DataAccessLayer.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,8 +35,7 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Brands",
                 columns: table => new
                 {
-                    BrandID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BrandID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -48,8 +47,7 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -61,8 +59,7 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "FeesConfigurations",
                 columns: table => new
                 {
-                    FeeConfigID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FeeConfigID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentFeePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     FixedFeePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -75,7 +72,7 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Transaction",
                 columns: table => new
                 {
-                    ResponseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ResponseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TmnCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TxnRef = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
@@ -99,9 +96,8 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    CartID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CartID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,17 +114,16 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ProductID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InventoryQuantity = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitPrice = table.Column<double>(type: "float", nullable: false),
                     PurchasePrice = table.Column<double>(type: "float", nullable: false),
                     Size = table.Column<double>(type: "float", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false),
-                    BrandID = table.Column<int>(type: "int", nullable: false),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CategoryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BrandID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,11 +152,10 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "CartItems",
                 columns: table => new
                 {
-                    CartItemID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CartItemID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: false),
-                    CartID = table.Column<int>(type: "int", nullable: false)
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CartID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,10 +177,9 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "ImageProducts",
                 columns: table => new
                 {
-                    ImageProductsID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageProductsID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: false)
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,13 +196,12 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Rating",
                 columns: table => new
                 {
-                    RatingID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RatingID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: false),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,15 +222,14 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Reports",
                 columns: table => new
                 {
-                    ReportID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReportID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReportText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ResponseText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderID = table.Column<int>(type: "int", nullable: false),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: false),
+                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -260,10 +251,9 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Reviews",
                 columns: table => new
                 {
-                    ReviewID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductID = table.Column<int>(type: "int", nullable: false),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReviewID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -287,15 +277,14 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<double>(type: "float", nullable: false),
-                    ReportID = table.Column<int>(type: "int", nullable: true),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FeesID = table.Column<int>(type: "int", nullable: false),
-                    transactionID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReportID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FeesID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    transactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -323,9 +312,8 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "Fees",
                 columns: table => new
                 {
-                    FeesID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderID = table.Column<int>(type: "int", nullable: false),
+                    FeesID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentFee = table.Column<double>(type: "float", nullable: true),
                     FixedFee = table.Column<double>(type: "float", nullable: false),
                     TotalFee = table.Column<double>(type: "float", nullable: false)
@@ -345,14 +333,13 @@ namespace Marguds_DataAccessLayer.Migrations
                 name: "OrdersDetail",
                 columns: table => new
                 {
-                    OrderDetailID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderDetailID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     unitPrice = table.Column<double>(type: "float", nullable: false),
                     promotionPrice = table.Column<double>(type: "float", nullable: false),
                     TotalAmount = table.Column<double>(type: "float", nullable: false),
-                    OrderID = table.Column<int>(type: "int", nullable: true),
-                    ProductID = table.Column<int>(type: "int", nullable: false)
+                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

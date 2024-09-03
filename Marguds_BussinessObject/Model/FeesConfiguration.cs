@@ -11,7 +11,7 @@ namespace Marguds_BussinessObject.Model
     public class FeesConfiguration
     {
         [Key]
-        public int FeeConfigID { get; set; }
+        public Guid FeeConfigID { get; set; }
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal PaymentFeePercentage { get; set; }

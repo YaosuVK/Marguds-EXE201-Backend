@@ -11,11 +11,11 @@ namespace Marguds_BussinessObject.Model
     public class ImageProduct
     {
         [Key]
-        public int ImageProductsID { get; set; }
+        public Guid ImageProductsID { get; set; }
         [Required]
         public string Image { get; set; }
         //
-        public int ProductID { get; set; }
+        public Guid ProductID { get; set; }
         [ForeignKey("ProductID")]
         public Product Products { get; set; }
     }

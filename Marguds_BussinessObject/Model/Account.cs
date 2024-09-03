@@ -11,7 +11,7 @@ namespace Marguds_BussinessObject.Model
     public class Account
     {
         [Key]
-        public string AccountID { get; set; }
+        public Guid AccountID { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
@@ -26,8 +26,9 @@ namespace Marguds_BussinessObject.Model
         public string? Image { get; set; }
         
         [Required]
-        public string Status { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        [EnumDataType(typeof(Status))]
+        public Status Status { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         //public ICollection<CartItem> CartItems { get; set; }
         public ICollection<Cart> Carts { get; set; }
@@ -42,4 +43,11 @@ namespace Marguds_BussinessObject.Model
 
         public ICollection<Rating> Ratings { get; set; }
     }
+
+    public enum Status
+    {
+        Active = 0,
+        Inactive = 1
+    }
+
 }

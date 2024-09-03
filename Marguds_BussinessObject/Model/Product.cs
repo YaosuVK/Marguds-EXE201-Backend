@@ -11,7 +11,7 @@ namespace Marguds_BussinessObject.Model
     public class Product
     {
         [Key]
-        public int ProductID { get; set; }
+        public Guid ProductID { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
@@ -25,15 +25,15 @@ namespace Marguds_BussinessObject.Model
 
         public double Size { get; set; }
 
-        public int CategoryID { get; set; }
+        public Guid CategoryID { get; set; }
         [ForeignKey("CategoryID")]
         public Category Category { get; set; }
 
-        public int BrandID { get; set; }
+        public Guid BrandID { get; set; }
         [ForeignKey("CategoryID")]
         public Brand Brand { get; set; }
 
-        public string AccountID { get; set; }
+        public Guid AccountID { get; set; }
         [ForeignKey("AccountID")]
         public Account Account { get; set; }
 

@@ -11,23 +11,23 @@ namespace Marguds_BussinessObject.Model
     public class Order
     {
         [Key]
-        public int OrderID { get; set; }
+        public Guid OrderID { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
         [EnumDataType(typeof(OrderStatus))]
         public OrderStatus Status { get; set; }
         public double Total { get; set; }
 
-        public int? ReportID { get; set; }
-        public string AccountID { get; set; }
+        public Guid? ReportID { get; set; }
+        public Guid AccountID { get; set; }
         [ForeignKey("AccountID")]
         public Account Account { get; set; }
 
         public Fees Fees { get; set; }
-        public int FeesID { get; set; }
+        public Guid FeesID { get; set; }
         [ForeignKey("FeesID")]
 
-        public string? transactionID { get; set; }
+        public Guid? transactionID { get; set; }
 
         [EnumDataType(typeof(PaymentMethod))]
         public PaymentMethod PaymentMethod { get; set; }

@@ -11,8 +11,8 @@ namespace Marguds_BussinessObject.Model
     public class Fees
     {
         [Key]
-        public int FeesID { get; set; }
-        public int OrderID { get; set; }
+        public Guid FeesID { get; set; }
+        public Guid OrderID { get; set; }
         [ForeignKey("OrderID ")]
         public Order? Order { get; set; }
 

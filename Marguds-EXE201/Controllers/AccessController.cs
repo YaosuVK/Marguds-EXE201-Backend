@@ -49,7 +49,7 @@ namespace Marguds_EXE201.Controllers
                     new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]!),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim(ClaimTypes.Sid, user.AccountID!),
+                    new Claim(ClaimTypes.Sid, user.AccountID!.ToString()),
                     new Claim(ClaimTypes.Role, user.Role!),
                     new Claim(ClaimTypes.Email, user.Email!),             
                     new Claim(ClaimTypes.Name, user.Name!),               

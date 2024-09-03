@@ -10,7 +10,7 @@ namespace Marguds_BussinessObject.Model
     public class Transaction
     {
         [Key]
-        public string ResponseId { get; set; }
+        public Guid ResponseId { get; set; }
         //
         //public int OrderID { get; set; }
         //[ForeignKey("OrderID")]
