@@ -1,4 +1,6 @@
-﻿namespace Marguds_BussinessObject.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Marguds_BussinessObject.ViewModels
 {
     public class SignupModel
     {
@@ -6,6 +8,7 @@
         public string? Password { get; set; }
         public string? ConfirmPassword { get; set; }
         public string? Name { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string? Address { get; set; }
+        public string? Phone { get; set; }
     }
 }

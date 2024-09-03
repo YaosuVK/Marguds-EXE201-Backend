@@ -12,10 +12,16 @@ namespace Marguds_DataAccessLayer.Helpers
             // CRUD MAPPING
             // ACCESS MAPPING
             CreateMap<Account, UserInfo>()
-                .ReverseMap();
+    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+
+            CreateMap<UserInfo, Account> ()
+    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<Status>(src.Status!)));
 
             CreateMap<SignupModel, Account>()
-                .ForMember(dest => dest.AccountID, opt => opt.MapFrom(_ => Guid.NewGuid()));
+                .ForMember(dest => dest.AccountID, opt => opt.MapFrom(_ => Guid.NewGuid()))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(_ => "Customer"))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(_ => 0));
+
 
         }
     }

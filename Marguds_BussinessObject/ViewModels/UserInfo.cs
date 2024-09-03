@@ -12,7 +12,7 @@ namespace Marguds_BussinessObject.ViewModels
         public string? Phone { get; set; }
         public string? Role { get; set; }
         public string? Image { get; set; }
-        public bool? Status { get; set; }
+        public string? Status { get; set; }
         public DateTime? DateOfBirth { get; set; }
     }
 }

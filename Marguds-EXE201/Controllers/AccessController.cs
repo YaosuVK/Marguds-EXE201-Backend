@@ -53,7 +53,7 @@ namespace Marguds_EXE201.Controllers
                     new Claim(ClaimTypes.Role, user.Role!),
                     new Claim(ClaimTypes.Email, user.Email!),             
                     new Claim(ClaimTypes.Name, user.Name!),               
-                    new Claim("Status", user.Status!.ToString())                     
+                    new Claim("Status", user.Status!)                     
                     };
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
